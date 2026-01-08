@@ -1,16 +1,13 @@
 // Load existing data from localStorage
 let vocab = JSON.parse(localStorage.getItem("vocab")) || [];
-let grammar = JSON.parse(localStorage.getItem("grammar")) || [];
 let expressions = JSON.parse(localStorage.getItem("expressions")) || [];
 
 // Track index being edited (-1 means adding new)
 let vocabEditIndex = -1;
-let grammarEditIndex = -1;
 let exprEditIndex = -1;
 
 // Display all on load
 displayVocabulary();
-displayGrammar();
 displayExpressions();
 
 // ===== VOCABULARY =====
@@ -41,9 +38,6 @@ function displayVocabulary(filter="") {
                         item.translation.toLowerCase().includes(filter.toLowerCase()))
         .forEach((item, index) => {
             const li = document.createElement("li");
-            li.style.display = "flex";
-            li.style.justifyContent = "space-between";
-            li.style.alignItems = "center";
 
             const textSpan = document.createElement("span");
             textSpan.textContent = `${item.word} → ${item.translation}`;
@@ -53,11 +47,13 @@ function displayVocabulary(filter="") {
 
             const editBtn = document.createElement("button");
             editBtn.textContent = "Edit";
+            editBtn.className = "edit";
             editBtn.onclick = () => editVocabulary(index);
             btnContainer.appendChild(editBtn);
 
             const delBtn = document.createElement("button");
             delBtn.textContent = "Delete";
+            delBtn.className = "delete";
             delBtn.onclick = () => deleteVocabulary(index);
             btnContainer.appendChild(delBtn);
 
@@ -83,78 +79,6 @@ function deleteVocabulary(index){
 function filterVocabulary(){
     const filter = document.getElementById("vocabSearch").value;
     displayVocabulary(filter);
-}
-
-// ===== GRAMMAR =====
-function addGrammar() {
-    const title = document.getElementById("grammarTitle").value.trim();
-    const note = document.getElementById("grammarNote").value.trim();
-
-    if(!title || !note){ alert("Please enter a grammar topic and note."); return; }
-
-    if(grammarEditIndex === -1){
-        grammar.push({title, note});
-    } else {
-        grammar[grammarEditIndex] = {title, note};
-        grammarEditIndex = -1;
-    }
-
-    localStorage.setItem("grammar", JSON.stringify(grammar));
-    displayGrammar();
-    document.getElementById("grammarTitle").value = "";
-    document.getElementById("grammarNote").value = "";
-}
-
-function displayGrammar(filter="") {
-    const list = document.getElementById("grammarList");
-    list.innerHTML = "";
-    grammar
-        .filter(item => item.title.toLowerCase().includes(filter.toLowerCase()) ||
-                        item.note.toLowerCase().includes(filter.toLowerCase()))
-        .forEach((item,index) => {
-            const li = document.createElement("li");
-            li.style.display = "flex";
-            li.style.justifyContent = "space-between";
-            li.style.alignItems = "center";
-
-            const textSpan = document.createElement("span");
-            textSpan.textContent = `${item.title}: ${item.note}`;
-            li.appendChild(textSpan);
-
-            const btnContainer = document.createElement("div");
-
-            const editBtn = document.createElement("button");
-            editBtn.textContent = "Edit";
-            editBtn.onclick = () => editGrammar(index);
-            btnContainer.appendChild(editBtn);
-
-            const delBtn = document.createElement("button");
-            delBtn.textContent = "Delete";
-            delBtn.onclick = () => deleteGrammar(index);
-            btnContainer.appendChild(delBtn);
-
-            li.appendChild(btnContainer);
-            list.appendChild(li);
-        });
-}
-
-function editGrammar(index){
-    document.getElementById("grammarTitle").value = grammar[index].title;
-    document.getElementById("grammarNote").value = grammar[index].note;
-    grammarEditIndex = index;
-}
-
-function deleteGrammar(index){
-    if(confirm("Are you sure you want to delete this grammar note?")){
-        grammar.splice(index,1);
-        localStorage.setItem("grammar", JSON.stringify(grammar));
-        displayGrammar();
-    }
-}
-
-function filterGrammar(){
-    const filter = document.getElementById("grammarSearch").value;
-    displayGrammar(filter);
 }
 
 // ===== EXPRESSIONS =====
@@ -185,9 +109,6 @@ function displayExpressions(filter="") {
                         item.meaning.toLowerCase().includes(filter.toLowerCase()))
         .forEach((item,index) => {
             const li = document.createElement("li");
-            li.style.display = "flex";
-            li.style.justifyContent = "space-between";
-            li.style.alignItems = "center";
 
             const textSpan = document.createElement("span");
             textSpan.textContent = `${item.french} → ${item.meaning}`;
@@ -197,11 +118,13 @@ function displayExpressions(filter="") {
 
             const editBtn = document.createElement("button");
             editBtn.textContent = "Edit";
+            editBtn.className = "edit";
             editBtn.onclick = () => editExpression(index);
             btnContainer.appendChild(editBtn);
 
             const delBtn = document.createElement("button");
             delBtn.textContent = "Delete";
+            delBtn.className = "delete";
             delBtn.onclick = () => deleteExpression(index);
             btnContainer.appendChild(delBtn);
 
