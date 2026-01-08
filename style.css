@@ -16,19 +16,33 @@ section {
     margin-bottom: 20px;
     border-radius: 8px;
     background-color: #f9f9f9;
+
+    /* Make all content inside the section use same max width */
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* space between inputs and lists */
 }
 
 input, button {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
     padding: 8px;
     font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box; /* ensures padding doesn’t exceed width */
 }
 
+/* Ensure inputs and buttons fill the section width */
+section input,
+section button {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Style the list items */
 ul {
     list-style-type: none;
     padding-left: 0;
+    margin: 0;
 }
 
 li {
@@ -39,8 +53,10 @@ li {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    word-break: break-word; /* prevent long words from overflowing */
 }
 
+/* Style Edit/Delete buttons inside list items */
 li button {
     padding: 4px 8px;
     font-size: 12px;
@@ -64,3 +80,19 @@ li button:hover {
     opacity: 0.85;
 }
 
+/* Optional: make the container responsive on mobile */
+@media (max-width: 500px) {
+    section {
+        padding: 10px;
+    }
+
+    input, button {
+        font-size: 13px;
+        padding: 6px;
+    }
+
+    li button {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+}
