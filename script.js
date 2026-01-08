@@ -13,18 +13,16 @@ displayVocabulary();
 displayGrammar();
 displayExpressions();
 
-// ===== Vocabulary =====
+// ===== VOCABULARY =====
 function addVocabulary() {
     const word = document.getElementById("vocabWord").value.trim();
     const translation = document.getElementById("vocabTranslation").value.trim();
 
-    if (!word || !translation) { alert("Please enter both word and translation."); return; }
+    if(!word || !translation){ alert("Please enter both word and translation."); return; }
 
     if(vocabEditIndex === -1){
-        // Add new
         vocab.push({word, translation});
     } else {
-        // Edit existing
         vocab[vocabEditIndex] = {word, translation};
         vocabEditIndex = -1;
     }
@@ -39,19 +37,31 @@ function displayVocabulary(filter="") {
     const list = document.getElementById("vocabList");
     list.innerHTML = "";
     vocab
-        .filter(item => item.word.toLowerCase().includes(filter.toLowerCase()) || 
+        .filter(item => item.word.toLowerCase().includes(filter.toLowerCase()) ||
                         item.translation.toLowerCase().includes(filter.toLowerCase()))
         .forEach((item, index) => {
             const li = document.createElement("li");
-            li.textContent = `${item.word} → ${item.translation}`;
+            li.style.display = "flex";
+            li.style.justifyContent = "space-between";
+            li.style.alignItems = "center";
 
-            // Add Edit button
+            const textSpan = document.createElement("span");
+            textSpan.textContent = `${item.word} → ${item.translation}`;
+            li.appendChild(textSpan);
+
+            const btnContainer = document.createElement("div");
+
             const editBtn = document.createElement("button");
             editBtn.textContent = "Edit";
-            editBtn.style.marginLeft = "10px";
             editBtn.onclick = () => editVocabulary(index);
-            li.appendChild(editBtn);
+            btnContainer.appendChild(editBtn);
 
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "Delete";
+            delBtn.onclick = () => deleteVocabulary(index);
+            btnContainer.appendChild(delBtn);
+
+            li.appendChild(btnContainer);
             list.appendChild(li);
         });
 }
@@ -62,17 +72,25 @@ function editVocabulary(index){
     vocabEditIndex = index;
 }
 
-function filterVocabulary() {
+function deleteVocabulary(index){
+    if(confirm("Are you sure you want to delete this vocabulary?")){
+        vocab.splice(index,1);
+        localStorage.setItem("vocab", JSON.stringify(vocab));
+        displayVocabulary();
+    }
+}
+
+function filterVocabulary(){
     const filter = document.getElementById("vocabSearch").value;
     displayVocabulary(filter);
 }
 
-// ===== Grammar =====
+// ===== GRAMMAR =====
 function addGrammar() {
     const title = document.getElementById("grammarTitle").value.trim();
     const note = document.getElementById("grammarNote").value.trim();
 
-    if(!title || !note) { alert("Please enter a grammar topic and note."); return; }
+    if(!title || !note){ alert("Please enter a grammar topic and note."); return; }
 
     if(grammarEditIndex === -1){
         grammar.push({title, note});
@@ -91,18 +109,31 @@ function displayGrammar(filter="") {
     const list = document.getElementById("grammarList");
     list.innerHTML = "";
     grammar
-        .filter(item => item.title.toLowerCase().includes(filter.toLowerCase()) || 
+        .filter(item => item.title.toLowerCase().includes(filter.toLowerCase()) ||
                         item.note.toLowerCase().includes(filter.toLowerCase()))
         .forEach((item,index) => {
             const li = document.createElement("li");
-            li.textContent = `${item.title}: ${item.note}`;
+            li.style.display = "flex";
+            li.style.justifyContent = "space-between";
+            li.style.alignItems = "center";
+
+            const textSpan = document.createElement("span");
+            textSpan.textContent = `${item.title}: ${item.note}`;
+            li.appendChild(textSpan);
+
+            const btnContainer = document.createElement("div");
 
             const editBtn = document.createElement("button");
             editBtn.textContent = "Edit";
-            editBtn.style.marginLeft = "10px";
             editBtn.onclick = () => editGrammar(index);
-            li.appendChild(editBtn);
+            btnContainer.appendChild(editBtn);
 
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "Delete";
+            delBtn.onclick = () => deleteGrammar(index);
+            btnContainer.appendChild(delBtn);
+
+            li.appendChild(btnContainer);
             list.appendChild(li);
         });
 }
@@ -113,12 +144,20 @@ function editGrammar(index){
     grammarEditIndex = index;
 }
 
-function filterGrammar() {
+function deleteGrammar(index){
+    if(confirm("Are you sure you want to delete this grammar note?")){
+        grammar.splice(index,1);
+        localStorage.setItem("grammar", JSON.stringify(grammar));
+        displayGrammar();
+    }
+}
+
+function filterGrammar(){
     const filter = document.getElementById("grammarSearch").value;
     displayGrammar(filter);
 }
 
-// ===== Expressions =====
+// ===== EXPRESSIONS =====
 function addExpression() {
     const french = document.getElementById("exprFrench").value.trim();
     const meaning = document.getElementById("exprMeaning").value.trim();
@@ -142,18 +181,31 @@ function displayExpressions(filter="") {
     const list = document.getElementById("exprList");
     list.innerHTML = "";
     expressions
-        .filter(item => item.french.toLowerCase().includes(filter.toLowerCase()) || 
+        .filter(item => item.french.toLowerCase().includes(filter.toLowerCase()) ||
                         item.meaning.toLowerCase().includes(filter.toLowerCase()))
         .forEach((item,index) => {
             const li = document.createElement("li");
-            li.textContent = `${item.french} → ${item.meaning}`;
+            li.style.display = "flex";
+            li.style.justifyContent = "space-between";
+            li.style.alignItems = "center";
+
+            const textSpan = document.createElement("span");
+            textSpan.textContent = `${item.french} → ${item.meaning}`;
+            li.appendChild(textSpan);
+
+            const btnContainer = document.createElement("div");
 
             const editBtn = document.createElement("button");
             editBtn.textContent = "Edit";
-            editBtn.style.marginLeft = "10px";
             editBtn.onclick = () => editExpression(index);
-            li.appendChild(editBtn);
+            btnContainer.appendChild(editBtn);
 
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "Delete";
+            delBtn.onclick = () => deleteExpression(index);
+            btnContainer.appendChild(delBtn);
+
+            li.appendChild(btnContainer);
             list.appendChild(li);
         });
 }
@@ -164,7 +216,15 @@ function editExpression(index){
     exprEditIndex = index;
 }
 
-function filterExpressions() {
+function deleteExpression(index){
+    if(confirm("Are you sure you want to delete this expression?")){
+        expressions.splice(index,1);
+        localStorage.setItem("expressions", JSON.stringify(expressions));
+        displayExpressions();
+    }
+}
+
+function filterExpressions(){
     const filter = document.getElementById("exprSearch").value;
     displayExpressions(filter);
 }
