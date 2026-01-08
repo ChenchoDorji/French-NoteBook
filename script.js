@@ -3,6 +3,11 @@ let vocab = JSON.parse(localStorage.getItem("vocab")) || [];
 let grammar = JSON.parse(localStorage.getItem("grammar")) || [];
 let expressions = JSON.parse(localStorage.getItem("expressions")) || [];
 
+// Track index being edited (-1 means adding new)
+let vocabEditIndex = -1;
+let grammarEditIndex = -1;
+let exprEditIndex = -1;
+
 // Display all on load
 displayVocabulary();
 displayGrammar();
@@ -13,15 +18,21 @@ function addVocabulary() {
     const word = document.getElementById("vocabWord").value.trim();
     const translation = document.getElementById("vocabTranslation").value.trim();
 
-    if(word && translation) {
+    if (!word || !translation) { alert("Please enter both word and translation."); return; }
+
+    if(vocabEditIndex === -1){
+        // Add new
         vocab.push({word, translation});
-        localStorage.setItem("vocab", JSON.stringify(vocab));
-        displayVocabulary();
-        document.getElementById("vocabWord").value = "";
-        document.getElementById("vocabTranslation").value = "";
     } else {
-        alert("Please enter both word and translation.");
+        // Edit existing
+        vocab[vocabEditIndex] = {word, translation};
+        vocabEditIndex = -1;
     }
+
+    localStorage.setItem("vocab", JSON.stringify(vocab));
+    displayVocabulary();
+    document.getElementById("vocabWord").value = "";
+    document.getElementById("vocabTranslation").value = "";
 }
 
 function displayVocabulary(filter="") {
@@ -30,11 +41,25 @@ function displayVocabulary(filter="") {
     vocab
         .filter(item => item.word.toLowerCase().includes(filter.toLowerCase()) || 
                         item.translation.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(item => {
+        .forEach((item, index) => {
             const li = document.createElement("li");
             li.textContent = `${item.word} → ${item.translation}`;
+
+            // Add Edit button
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.style.marginLeft = "10px";
+            editBtn.onclick = () => editVocabulary(index);
+            li.appendChild(editBtn);
+
             list.appendChild(li);
         });
+}
+
+function editVocabulary(index){
+    document.getElementById("vocabWord").value = vocab[index].word;
+    document.getElementById("vocabTranslation").value = vocab[index].translation;
+    vocabEditIndex = index;
 }
 
 function filterVocabulary() {
@@ -47,15 +72,19 @@ function addGrammar() {
     const title = document.getElementById("grammarTitle").value.trim();
     const note = document.getElementById("grammarNote").value.trim();
 
-    if(title && note) {
+    if(!title || !note) { alert("Please enter a grammar topic and note."); return; }
+
+    if(grammarEditIndex === -1){
         grammar.push({title, note});
-        localStorage.setItem("grammar", JSON.stringify(grammar));
-        displayGrammar();
-        document.getElementById("grammarTitle").value = "";
-        document.getElementById("grammarNote").value = "";
     } else {
-        alert("Please enter a grammar topic and note.");
+        grammar[grammarEditIndex] = {title, note};
+        grammarEditIndex = -1;
     }
+
+    localStorage.setItem("grammar", JSON.stringify(grammar));
+    displayGrammar();
+    document.getElementById("grammarTitle").value = "";
+    document.getElementById("grammarNote").value = "";
 }
 
 function displayGrammar(filter="") {
@@ -64,11 +93,24 @@ function displayGrammar(filter="") {
     grammar
         .filter(item => item.title.toLowerCase().includes(filter.toLowerCase()) || 
                         item.note.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(item => {
+        .forEach((item,index) => {
             const li = document.createElement("li");
             li.textContent = `${item.title}: ${item.note}`;
+
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.style.marginLeft = "10px";
+            editBtn.onclick = () => editGrammar(index);
+            li.appendChild(editBtn);
+
             list.appendChild(li);
         });
+}
+
+function editGrammar(index){
+    document.getElementById("grammarTitle").value = grammar[index].title;
+    document.getElementById("grammarNote").value = grammar[index].note;
+    grammarEditIndex = index;
 }
 
 function filterGrammar() {
@@ -81,15 +123,19 @@ function addExpression() {
     const french = document.getElementById("exprFrench").value.trim();
     const meaning = document.getElementById("exprMeaning").value.trim();
 
-    if(french && meaning) {
+    if(!french || !meaning){ alert("Please enter both the expression and its meaning."); return; }
+
+    if(exprEditIndex === -1){
         expressions.push({french, meaning});
-        localStorage.setItem("expressions", JSON.stringify(expressions));
-        displayExpressions();
-        document.getElementById("exprFrench").value = "";
-        document.getElementById("exprMeaning").value = "";
     } else {
-        alert("Please enter both the expression and its meaning.");
+        expressions[exprEditIndex] = {french, meaning};
+        exprEditIndex = -1;
     }
+
+    localStorage.setItem("expressions", JSON.stringify(expressions));
+    displayExpressions();
+    document.getElementById("exprFrench").value = "";
+    document.getElementById("exprMeaning").value = "";
 }
 
 function displayExpressions(filter="") {
@@ -98,11 +144,24 @@ function displayExpressions(filter="") {
     expressions
         .filter(item => item.french.toLowerCase().includes(filter.toLowerCase()) || 
                         item.meaning.toLowerCase().includes(filter.toLowerCase()))
-        .forEach(item => {
+        .forEach((item,index) => {
             const li = document.createElement("li");
             li.textContent = `${item.french} → ${item.meaning}`;
+
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.style.marginLeft = "10px";
+            editBtn.onclick = () => editExpression(index);
+            li.appendChild(editBtn);
+
             list.appendChild(li);
         });
+}
+
+function editExpression(index){
+    document.getElementById("exprFrench").value = expressions[index].french;
+    document.getElementById("exprMeaning").value = expressions[index].meaning;
+    exprEditIndex = index;
 }
 
 function filterExpressions() {
