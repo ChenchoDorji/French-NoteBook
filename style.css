@@ -1,78 +1,116 @@
+/* ===== BODY & PAGE LAYOUT ===== */
 body {
     font-family: Arial, sans-serif;
     padding: 20px;
     max-width: 700px;
     margin: auto;
+    background-color: #f5f6fa;
 }
 
 h1 {
     text-align: center;
     color: #2c3e50;
+    margin-bottom: 30px;
 }
 
+/* ===== SECTIONS ===== */
 section {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-
-    /* Make all content inside the section use same max width */
+    border-radius: 10px;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    gap: 8px; /* space between inputs and lists */
+    gap: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
 }
 
+/* Colored section headers */
+section.vocabulary h2 {
+    background-color: #3498db; /* Blue */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+section.expressions h2 {
+    background-color: #9b59b6; /* Purple */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+/* ===== INPUTS & BUTTONS ===== */
 input, button {
-    padding: 8px;
+    padding: 8px 10px;
     font-size: 14px;
-    border-radius: 4px;
+    border-radius: 5px;
     border: 1px solid #ccc;
-    box-sizing: border-box; /* ensures padding doesn’t exceed width */
+    box-sizing: border-box;
 }
 
-/* Ensure inputs and buttons fill the section width */
-section input,
-section button {
+/* Full width inside sections */
+section input, section button {
     width: 100%;
     max-width: 100%;
 }
 
-/* Style the list items */
+/* Add button styling */
+section button {
+    background-color: #2ecc71; /* green */
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+section button:hover {
+    background-color: #27ae60;
+}
+
+/* ===== LISTS ===== */
 ul {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
 }
 
+/* Each item is a card with shadow */
 li {
-    margin: 4px 0;
     background-color: #ecf0f1;
-    padding: 5px 10px;
-    border-radius: 4px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    margin: 5px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    word-break: break-word; /* prevent long words from overflowing */
+    word-break: break-word;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* Style Edit/Delete buttons inside list items */
+/* Container for Edit/Delete buttons */
+li div {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+/* ===== EDIT & DELETE BUTTONS ===== */
 li button {
     padding: 4px 8px;
     font-size: 12px;
     border-radius: 4px;
     border: none;
     cursor: pointer;
-    margin-left: 5px;
 }
 
 li button.edit {
-    background-color: #f1c40f;  /* yellow */
+    background-color: #f1c40f; /* yellow */
     color: white;
 }
 
 li button.delete {
-    background-color: #e74c3c;  /* red */
+    background-color: #e74c3c; /* red */
     color: white;
 }
 
@@ -80,10 +118,10 @@ li button:hover {
     opacity: 0.85;
 }
 
-/* Optional: make the container responsive on mobile */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 500px) {
     section {
-        padding: 10px;
+        padding: 15px;
     }
 
     input, button {
