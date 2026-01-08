@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>French Notebook</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>My French Notebook</h1>
+
+    <!-- Vocabulary Section -->
+    <section>
+        <h2>Vocabulary</h2>
+        <input type="text" id="vocabWord" placeholder="French Word">
+        <input type="text" id="vocabTranslation" placeholder="Translation">
+        <button onclick="addVocabulary()">Add Vocabulary</button>
+        <input type="text" id="vocabSearch" placeholder="Search Vocabulary" onkeyup="filterVocabulary()">
+        <ul id="vocabList"></ul>
+    </section>
+
+    <!-- Grammar Section -->
+    <section>
+        <h2>Grammar</h2>
+        <input type="text" id="grammarTitle" placeholder="Grammar Topic">
+        <textarea id="grammarNote" placeholder="Rule / Explanation"></textarea>
+        <button onclick="addGrammar()">Add Grammar</button>
+        <input type="text" id="grammarSearch" placeholder="Search Grammar" onkeyup="filterGrammar()">
+        <ul id="grammarList"></ul>
+    </section>
+
+    <!-- Expressions Section -->
+    <section>
+        <h2>Expressions</h2>
+        <input type="text" id="exprFrench" placeholder="Expression in French">
+        <input type="text" id="exprMeaning" placeholder="Meaning">
+        <button onclick="addExpression()">Add Expression</button>
+        <input type="text" id="exprSearch" placeholder="Search Expressions" onkeyup="filterExpressions()">
+        <ul id="exprList"></ul>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
