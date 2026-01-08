@@ -1,51 +1,26 @@
-body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    max-width: 700px;
-    margin: auto;
-}
-
-h1 {
-    text-align: center;
-    color: #2c3e50;
-}
-
-section {
-    border: 1px solid #ccc;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-}
-
-input, textarea, button {
-    display: block;
-    width: 100%;
-    margin: 5px 0;
-    padding: 8px;
-    font-size: 14px;
-}
+/* Existing styles for body, section, inputs, etc. stay the same */
 
 button {
-    background-color: #3498db;
-    color: white;
+    padding: 4px 8px;
+    margin-left: 5px;
+    font-size: 12px;
+    border-radius: 4px;
     border: none;
     cursor: pointer;
-    border-radius: 5px;
 }
 
-button:hover {
-    background-color: #2980b9;
+/* Specific colors for different button types */
+li button:nth-child(1) { /* Edit button */
+    background-color: #f1c40f;  /* yellow */
+    color: #fff;
 }
 
-ul {
-    list-style-type: none;
-    padding-left: 0;
+li button:nth-child(2) { /* Delete button */
+    background-color: #e74c3c;  /* red */
+    color: #fff;
 }
 
-li {
-    margin: 4px 0;
-    background-color: #ecf0f1;
-    padding: 5px 10px;
-    border-radius: 4px;
+/* Hover effects */
+li button:hover {
+    opacity: 0.85;
 }
